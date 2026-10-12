@@ -90,3 +90,41 @@ platform_disk_free() {
     df --output=avail -B1 "$path" | tail -1
   fi
 }
+
+# Which native package manager is available: pacman | apt | brew | none.
+# Probed in this order so a mac never needs pacman/apt and Linux never needs
+# Homebrew (a Homebrew-on-Linux install does not shadow the distro manager).
+# Usage: mgr="$(platform_pkg_manager)"
+platform_pkg_manager() {
+  if command -v pacman &>/dev/null; then echo pacman
+  elif command -v apt-get &>/dev/null; then echo apt
+  elif command -v brew &>/dev/null; then echo brew
+  else echo none
+  fi
+}
+
+# Install native packages with whatever manager the box has. Callers decide
+# WHETHER to install (check `command -v` first: already-there wins); this only
+# does the how. Honours DRY_RUN=1 (prints, runs nothing). Uses sudo on
+# pacman/apt, so a real run is a hard gate: the caller must have approval.
+# pacman: -S without -y on purpose (never a partial upgrade; run a full -Syu
+# yourself first if the db is stale). Package names must match on all three
+# managers (true for ffmpeg, aria2).
+# Usage: platform_pkg_install ffmpeg [aria2 ...]
+platform_pkg_install() {
+  local mgr cmd
+  mgr="$(platform_pkg_manager)"
+  case "$mgr" in
+    pacman) cmd=(sudo pacman -S --needed --noconfirm "$@") ;;
+    apt)    cmd=(sudo apt-get install -y "$@") ;;
+    brew)   cmd=(brew install "$@") ;;
+    *) echo "  ⚠ no supported package manager (pacman/apt-get/brew); install by hand: $*" >&2; return 1 ;;
+  esac
+  if [[ "${DRY_RUN:-0}" == "1" ]]; then
+    echo "  [dry-run] would: ${cmd[*]}"
+    return 0
+  fi
+  # apt needs a fresh index before install on a clean box
+  [[ "$mgr" == apt ]] && sudo apt-get update
+  "${cmd[@]}"
+}

@@ -6,7 +6,10 @@
 
 # macOS
 .DS_Store
-._*          # AppleDouble sidecar files (created when a Mac touches the repo over SMB)
+# AppleDouble sidecar files (created when a Mac touches the repo over SMB).
+# Comment on its own line: gitignore has no inline comments, so a trailing
+# "# ..." becomes part of the pattern and nothing matches.
+._*
 
 # Claude Code local settings
 .claude/settings.local.json

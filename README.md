@@ -49,7 +49,7 @@ new-machine setup: installs tools, symlinks dotfiles, wires the shell.
 One command — clone, then bootstrap:
 
 ```bash
-git clone https://github.com/oneafrikan/dev-env.git ~/.dev-env \
+git clone https://github.com/oneafrikan/dev-env-public.git ~/.dev-env \
   && bash ~/.dev-env/bootstrap.sh
 ```
 
@@ -158,7 +158,7 @@ been two separate git histories from the start.
 The natural pattern for adding a script from another machine:
 
 ```bash
-git clone https://github.com/oneafrikan/dev-env.git ~/.dev-env
+git clone https://github.com/oneafrikan/dev-env-public.git ~/.dev-env
 
 # Drop it into the right domain folder (e.g. obsidian-vault-utils/)
 # Match conventions: set -euo pipefail, log/ok/warn/err helpers, chmod +x

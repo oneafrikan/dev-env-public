@@ -105,6 +105,7 @@ overlay) is not part of this repo. It is a separate public generator,
 from `machines/example.md` if you want one, and run its `deploy.sh`. With `--harnesses` it also
 writes flat copies of the same rules for other coding harnesses (Codex, Antigravity CLI,
 OpenCode, Copilot CLI, Goose). Flags, targets and limits are in that repo's README.
+It is also included here as the `claude/` submodule: run `git submodule update --init` to fetch it.
 
 ## Private counterpart
 

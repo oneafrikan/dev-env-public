@@ -100,12 +100,12 @@ just stubs       # list every NOT IMPLEMENTED script
 ## Claude Code rules
 
 The global `~/.claude/CLAUDE.md` setup (a shared rules file plus an optional per-machine
-overlay) is not part of this repo. It is a separate public generator,
-[oneafrikan/claude-rules](https://github.com/oneafrikan/claude-rules): clone it, add an overlay
-from `machines/example.md` if you want one, and run its `deploy.sh`. With `--harnesses` it also
-writes flat copies of the same rules for other coding harnesses (Codex, Antigravity CLI,
-OpenCode, Copilot CLI, Goose). Flags, targets and limits are in that repo's README.
-It is also included here as the `claude/` submodule: run `git submodule update --init` to fetch it.
+overlay) is the separate public generator
+[oneafrikan/claude-rules](https://github.com/oneafrikan/claude-rules), included here as the
+`claude/` submodule: run `git submodule update --init` to fetch it. For a per-machine overlay,
+copy `claude/machines/example.md` and add it, then run `claude/deploy.sh`. With `--harnesses` it
+also writes flat copies of the same rules for other coding harnesses (Codex, Antigravity CLI,
+OpenCode, Copilot CLI, Goose). Flags, targets and limits are in `claude/README.md`.
 
 ## Private counterpart
 

@@ -35,15 +35,15 @@ leave a clearly marked `# DECISION:` comment explaining what you chose and why.
 
 This repo is a personal Mac/Ubuntu development environment for a senior developer
 with 15+ years of LAMP / Python experience, running macOS/Ubuntu with Terminal/iTerm2, tmux, Hammerspoon,
-Cursor, and a homelab (TrueNAS + Beelink SER8 running Linux amongst other machines).
+Cursor, and a homelab (a NAS plus a mini-PC running Linux amongst other machines).
 
 The developer works across four primary coding contexts that must be instantly
 switchable without cognitive overhead:
 
 | Context   | Root Path                      | Purpose                                      |
 |-----------|-------------------------------|----------------------------------------------|
-| jarvis    | PLACEHOLDER_JARVIS_PATH        | Personal AI OS — OpenClaw agent runtime      |
-| guide     | PLACEHOLDER_GUIDE_PATH         | Team-facing AI agent layer (work project)    |
+| jarvis    | PLACEHOLDER_JARVIS_PATH        | Personal AI agent runtime                    |
+| guide     | PLACEHOLDER_GUIDE_PATH         | Team-facing AI agent layer                  |
 | vault     | PLACEHOLDER_VAULT_PATH         | Household Obsidian markdown vault            |
 | project-c | PLACEHOLDER_PROJECT_C_PATH     | Data pipelines                               |
 
@@ -73,7 +73,7 @@ Used for secrets that should never touch disk: API keys, credentials, tokens.
 Pattern for 1Password retrieval:
 ```bash
 SECRET=$(op read "op://Private/ITEM_NAME/credential" 2>/dev/null) || \
-  SECRET=$(op read "op://Employee/ITEM_NAME/credential" 2>/dev/null) || \
+  SECRET=$(op read "op://Work/ITEM_NAME/credential" 2>/dev/null) || \
   { echo "ERROR: Could not retrieve secret from 1Password. Is op signed in?"; exit 1; }
 ```
 Always fail clearly if `op` is not authenticated. Never silently fall back.
@@ -425,7 +425,7 @@ Each context script must:
 tmux window layout per context:
 
 **jarvis:**
-- Window 0 `openclaw` — cd to root, activate venv
+- Window 0 `myagent` — cd to root, activate venv
 - Window 1 `logs` — tail logs/jarvis.log
 - Window 2 `scratch` — clean shell, venv active
 - Window 3 `git` — git status + git log --oneline -10
@@ -512,7 +512,7 @@ Read a list of local services from `$DEV_ENV/services/services.conf`.
 Format of services.conf:
 ```
 # name    type     target
-openclaw  http     http://localhost:8000/health
+myagent   http     http://localhost:8000/health
 ollama    http     http://localhost:11434/api/tags
 duckdb    process  duckdb
 ```

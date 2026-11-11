@@ -53,7 +53,7 @@ sudo tailscale set --advertise-exit-node=false
 
 ```bash
 # Advertise a LAN subnet so peers can reach it (approve in admin console)
-sudo tailscale set --advertise-routes=192.168.1.0/24,10.0.0.0/24
+sudo tailscale set --advertise-routes=192.0.2.0/24,198.51.100.0/24
 sudo tailscale set --advertise-routes=          # stop advertising
 
 # Accept routes/DNS advertised by other nodes
